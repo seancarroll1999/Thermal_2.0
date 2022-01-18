@@ -72,7 +72,7 @@ imageUpload.addEventListener("change", (e) => {
                 if(xmlHttp.responseText == "Done"){
                   successAlert.textContent = "Success - Image printing";
                   successAlert.style.display = "block";
-                } else if(xmlHttp,lHttp.responseText == "Busy")
+                } else if(xmlHttp.responseText == "Busy")
                 {
                   warningAlert.textContent = "Success - Image printing";
                   warningAlert.style.display = "block";
