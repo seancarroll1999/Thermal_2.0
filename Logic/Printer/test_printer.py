@@ -21,6 +21,7 @@ class Test_Printer():
         image = self.resize(image)
         image.save("Test.png")
         image.close()
+        
         return "Done"
 
     def resize(self, image):

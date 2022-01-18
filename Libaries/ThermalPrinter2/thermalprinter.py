@@ -33,7 +33,7 @@ class ThermalPrinter(Serial):
     def __init__(self, port='/dev/serial0', baudrate=9600, **kwargs):
         """ Print init. """
 
-        self.heat_time = int(kwargs.get('heat_time', 150))
+        self.heat_time = int(kwargs.get('heat_time', 190))
         if not 0 <= self.heat_time <= 255:
             raise ThermalPrinterValueError(
                 'heat_time should be between 0 and 255 (default: 80).')

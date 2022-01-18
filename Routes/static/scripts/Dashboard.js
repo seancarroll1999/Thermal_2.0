@@ -6,6 +6,7 @@ var imagePreview = document.getElementById("file-upload-image");
 var imageUploadFooter = document.getElementById("photo-upload-footer");
 var dangerAlert = document.getElementById("danger-alert");
 var successAlert = document.getElementById("success-alert");
+var warningAlert = document.getElementById("warning-alert");
 
 imageUpload.addEventListener("change", (e) => {
     // get a reference to the file
@@ -54,7 +55,8 @@ imageUpload.addEventListener("change", (e) => {
   }
 
   sendImageButton.addEventListener("click", (e) => {
-      var base64String = imagePreview.src
+    sendImageButton.disabled = true;
+    var base64String = imagePreview.src
         .replace("data:", "")
         .replace(/^.+,/, "");
       
@@ -70,9 +72,13 @@ imageUpload.addEventListener("change", (e) => {
                 if(xmlHttp.responseText == "Done"){
                   successAlert.textContent = "Success - Image printing";
                   successAlert.style.display = "block";
-                  removeImagePreview();
+                } else if(xmlHttp,lHttp.responseText == "Busy")
+                {
+                  warningAlert.textContent = "Success - Image printing";
+                  warningAlert.style.display = "block";
                 }
             }
+            sendImageButton.disabled = false;
         }
         xmlHttp.open("post", "/SendImage"); 
         xmlHttp.send(formData); 
