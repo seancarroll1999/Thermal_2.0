@@ -1,6 +1,7 @@
 from flask import Blueprint, Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta
 from Logic.api import *
+from Logic.core import *
 
 app = Flask(__name__)
 app.secret_key = "SECRETKEY"
@@ -42,6 +43,17 @@ def Logout():
     session.pop('loggedin', None)
     session.pop('id', None)
     return redirect(url_for('Login'))
+
+@app.route("/SendImage", methods=['POST'])
+def sendImage():
+    if 'loggedin' in session and request.method == "POST" and 'img' in request.form:
+        if request.method == "POST" and 'img' in request.form:
+            status = printImage(request.form['img'])
+            return status
+    
+    return "Error"
+        
+
 
 ###   API
 @app.route("/API/v1/<string:key>/<string:methodName>")

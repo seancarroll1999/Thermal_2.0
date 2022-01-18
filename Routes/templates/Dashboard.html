@@ -15,14 +15,37 @@
     <div id="content">
         <h1>Dashboard</h1>
         
-        <div class="card">
-            <h5 class="card-header">Features</h5>
-            <div class="card-body">
-                <a href="" class="btn btn-lg px-4 btn-primary">Crypto</a>
-            </div>
+        <div id="danger-alert" class="alert alert-danger" role="alert">
+            Danger
+        </div>
+
+        <div id="success-alert" class="alert alert-success" role="alert">
+            Danger
         </div>
 
         <div class="card">
+            <h5 class="card-header">Print Picture</h5>
+            <div class="card-body">
+                <input type="file" class="form-control" id="customFile" />
+                <img id="file-upload-image" src="" alt="">
+            </div>
+
+            <div id="photo-upload-footer" class="card-footer text-right">
+                <button id="cancel-image" type="button" class="btn btn-secondary">Cancel</button>
+                <button id="print-image" type="button" class="btn btn-secondary">Print</button>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <h5 class="card-header">Send Message</h5>
+            <div class="card-body">
+                <textarea class="form-control" id="message-text-area" rows="5"></textarea>
+            </div>
+
+            <div id="message-upload-footer" class="card-footer text-right">
+                <button type="button" disabled class="btn btn-secondary">Send</button>
+            </div>
 
         </div>
 

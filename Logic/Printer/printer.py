@@ -13,3 +13,4 @@ class CustomPrinter(ThermalPrinter):
         image = Image.open(image_path)
         image.thumbnail(size, Image.ANTIALIAS)
         self.image(image)
+

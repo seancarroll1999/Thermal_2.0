@@ -2,3 +2,38 @@ body
 {
     background-color: #0d0312;
 }
+
+.card
+{
+    margin: 30px 20px;
+}
+
+#file-upload-image
+{
+    max-width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-top: 20px;
+}
+
+.card-footer
+{
+    text-align: right;
+}
+
+#photo-upload-footer
+{
+    display: none;
+}
+
+#message-text-area
+{
+    max-width: 95%;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+}
+
+.alert{
+    margin: 30px 20px;
+    display: none;
+}
