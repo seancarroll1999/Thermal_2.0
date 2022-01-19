@@ -13,3 +13,6 @@ def printCrypto():
 
 def printImage(base64Image):
     return customPrinter.print_base64_image(base64Image)
+
+def printMessage(msg, name):
+    return customPrinter.print_message(msg, name)

@@ -2,6 +2,7 @@ from flask import Blueprint, Flask, render_template, request, redirect, url_for,
 from datetime import datetime, timedelta
 from Logic.api import *
 from Logic.core import *
+import json
 
 app = Flask(__name__)
 app.secret_key = "SECRETKEY"
@@ -22,12 +23,18 @@ def Login():
 
     if request.method == "POST" and 'password' in request.form:
         password = request.form['password']
-        if password == "TEST":
-            session['loggedin'] = True
-            session['id'] = "DESKTOPID"
-            return redirect(url_for('Dashboard'))
-        else:
-            msg = 'Incorrect Password'
+        with open('login.txt') as f:
+            data = f.read()
+        logins = json.loads(data)
+        for login in logins:
+            if password == login:
+                session['loggedin'] = True
+                session['id'] = "DESKTOPID"
+                session['name'] = logins[login]
+                print(session['name'])
+                return redirect(url_for('Dashboard'))
+        
+        msg = "Incorrect Password"
         
     return render_template('Login.html', msg='')
 
@@ -50,7 +57,13 @@ def sendImage():
         if request.method == "POST" and 'img' in request.form:
             status = printImage(request.form['img'])
             return status
-    
+    return "Error"
+
+@app.route("/SendMessage", methods=['POST'])
+def sendMessage():
+    if 'loggedin' in session and request.method == "POST" and 'msg' in request.form:
+        status = printMessage(request.form['msg'], session['name'])
+        return status
     return "Error"
         
 

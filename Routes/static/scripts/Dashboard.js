@@ -7,6 +7,7 @@ var imageUploadFooter = document.getElementById("photo-upload-footer");
 var dangerAlert = document.getElementById("danger-alert");
 var successAlert = document.getElementById("success-alert");
 var warningAlert = document.getElementById("warning-alert");
+var sendMessageButton = document.getElementById("print-message");
 
 imageUpload.addEventListener("change", (e) => {
     // get a reference to the file
@@ -74,7 +75,7 @@ imageUpload.addEventListener("change", (e) => {
                   successAlert.style.display = "block";
                 } else if(xmlHttp.responseText == "Busy")
                 {
-                  warningAlert.textContent = "Success - Image printing";
+                  warningAlert.textContent = "Busy - Printer is busy";
                   warningAlert.style.display = "block";
                 }
             }
@@ -94,3 +95,27 @@ imageUpload.addEventListener("change", (e) => {
   function removeImagePreview(){
     imagePreview.src = "";
   }
+
+  sendMessageButton.addEventListener("click", (e) => {
+    if(textArea.value != ""){
+        var formData = new FormData();
+        formData.append("msg", textArea.value);
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function()
+        {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            {
+                if(xmlHttp.responseText == "Done"){
+                  successAlert.textContent = "Success - Message sent";
+                  successAlert.style.display = "block";
+                } else if(xmlHttp.responseText == "Busy")
+                {
+                  warningAlert.textContent = "Success - Message printing";
+                  warningAlert.style.display = "block";
+                }
+            }
+        }
+        xmlHttp.open("post", "/SendMessage"); 
+        xmlHttp.send(formData); 
+    }
+  });

@@ -11,13 +11,7 @@ class CustomPrinter(ThermalPrinter):
         self.printThread = Thread(target=self.print_base64_thread, args=())
         super().__init__()
         self.codepage()
-        
-    def print_image(self, image_path):
-        size = 384, 384
-        image = Image.open(image_path)
-        image.thumbnail(size, Image.ANTIALIAS)
-        self.image(image)
-    
+            
     def print_base64_image(self, base64String):
         busy = self.printThread.is_alive()
         if busy:
@@ -51,4 +45,18 @@ class CustomPrinter(ThermalPrinter):
             image = image.rotate(90, expand=True)
             
         return image
+    
+    def print_message(self, msg, name):
+        busy = self.printThread.is_alive()
+        if busy:
+            return "Busy"
+        else:
+            self.printThread = Thread(target=self.print_message_thread, args=(msg, name, ))
+            self.printThread.start()
+        return "Done"
+
+    def print_message_thread(self, msg, name):
+        self.out(msg)
+        self.out("- " + name, justify='R')
+        self.feed(3)
 
