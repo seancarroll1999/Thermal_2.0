@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from Logic.api import *
 from Logic.core import *
 import json
+from Logic.MySql import * 
 
 app = Flask(__name__)
 app.secret_key = "SECRETKEY"
