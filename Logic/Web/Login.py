@@ -24,7 +24,8 @@ def Authenticate(passHash):
                 return {
                     'id' : row[0],
                     'forenames' : row[1],
-                    'surname' : row[2]
+                    'surname' : row[2],
+                    'permissions' : row[4]
                 }
                 row = cursor.fetchone()
         else:

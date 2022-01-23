@@ -2,6 +2,7 @@ from Logic.Printer.DatabasePrinter import *
 import time
 from Logic.Printer.printer import CustomPrinter
 import os
+import json
 
 customPrinter = CustomPrinter()
 customPrinter.flush()
@@ -43,6 +44,9 @@ def StartPrinting():
                 
                 if print_item['function_id'] == 2: #PrintImage
                     print_image(print_item)
+                
+                if print_item['function_id'] == 3: #PrintTxt
+                    print_txt(print_item['data'], json.loads(print_item['attributes']))
                 
                 DeletePrintItem(print_item['print_id'])
         

@@ -11,6 +11,43 @@ var sendMessageButton = document.getElementById("print-message");
 
 var textAreaMinLines = 5
 
+//Feature Buttons
+var morningMessageBtn = document.getElementById("morningMessageBtn");
+var googleCalendarBtn = document.getElementById("googleCalendarBtn");
+var cryptoBtn = document.getElementById("cryptoBtn");
+var sudokuBtn = document.getElementById("sudokuBtn");
+var sudokuPrintBtn = document.getElementById("sudokuPrintBtn");
+var quoteBtn = document.getElementById("quoteBtn");
+
+var featureList = {
+  'printMorningMessage' : morningMessageBtn,
+  'printCrypto' : cryptoBtn,
+  'printGoogleCalendar' : googleCalendarBtn,
+  'printSudoku' : sudokuBtn,
+  'printSudokuAnswer' : sudokuPrintBtn,
+  'printQuote' : quoteBtn
+};
+
+
+for(let featureValue in featureList){
+  featureList[featureValue].addEventListener("click", (e) => {
+    var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function()
+        {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            {
+              successAlert.textContent = `Success - Printed ${xmlHttp.responseText}`;
+              successAlert.style.display = "block";
+              successAlert.scrollIntoView();
+            }
+        }
+        xmlHttp.open("get", `/API/v1/webKey/${featureValue}`, true); 
+        xmlHttp.send(); 
+  });
+}
+
+
+
 imageUpload.addEventListener("change", (e) => {
     // get a reference to the file
     const file = e.target.files[0];

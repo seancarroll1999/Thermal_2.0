@@ -32,6 +32,14 @@ def Login():
             session['loggedin'] = True
             session['id'] = authResponse['id']
             session['name'] = authResponse['forenames']
+            permissionString = authResponse['permissions'][1:-1].split(',')
+            permissions = []
+            for permission in permissionString:
+                permissions.append(permission)
+
+            session['permissions'] = permissions
+            print(session['permissions'])
+
             return redirect(url_for('Dashboard'))
         else:
             msg = 'Incorrect Password'

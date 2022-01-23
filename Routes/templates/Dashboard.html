@@ -23,6 +23,24 @@
             Danger
         </div>
 
+        {% if "admin" in session.permissions %}
+        <div class="card">
+            <h5 class="card-header">Features</h5>
+            <div class="card-body">
+                <div class="button-group d-grid gap-2 d-md-block">
+                    <button type="button" id="morningMessageBtn" class="btn btn-secondary">Morning Message</button>
+                    <button type="button" id="googleCalendarBtn" class="btn btn-secondary">Google Calendar</button>
+                    <button type="button" id="cryptoBtn" class="btn btn-secondary">Crypto</button>
+                </div>
+                <div class="button-group d-grid gap-2 d-md-block">
+                    <button type="button" id="sudokuBtn" class="btn btn-secondary">Sudoku</button>
+                    <button type="button" id="sudokuPrintBtn" class="btn btn-secondary">Latest Sudoku Answer</button>
+                    <button type="button" id="quoteBtn" class="btn btn-secondary">Quote</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="card">
             <h5 class="card-header">Print Picture</h5>
             <div class="card-body">
@@ -48,6 +66,8 @@
             </div>
 
         </div>
+
+        
 
 
     </div>
