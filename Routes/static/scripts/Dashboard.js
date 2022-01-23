@@ -9,6 +9,8 @@ var successAlert = document.getElementById("success-alert");
 var warningAlert = document.getElementById("warning-alert");
 var sendMessageButton = document.getElementById("print-message");
 
+var textAreaMinLines = 5
+
 imageUpload.addEventListener("change", (e) => {
     // get a reference to the file
     const file = e.target.files[0];
@@ -29,6 +31,7 @@ imageUpload.addEventListener("change", (e) => {
     } else {
       dangerAlert.textContent = "Error - Please select an image";
       dangerAlert.style.display = "block";
+      dangerAlert.scrollIntoView()
     }
   });
 
@@ -42,9 +45,10 @@ imageUpload.addEventListener("change", (e) => {
     var lines = (textArea.value.match(/\n/g) || '').length + 1  
     var maxLines = textArea.rows;
     
-    if(lines+1 < maxLines){
+    if(lines+1 < maxLines && lines+1 > textAreaMinLines){
       textArea.rows = lines+1;
     }
+    
   });
 
   function CheckTextAreaLines(textarea){
@@ -56,7 +60,6 @@ imageUpload.addEventListener("change", (e) => {
   }
 
   sendImageButton.addEventListener("click", (e) => {
-    sendImageButton.disabled = true;
     var base64String = imagePreview.src
         .replace("data:", "")
         .replace(/^.+,/, "");
@@ -73,13 +76,10 @@ imageUpload.addEventListener("change", (e) => {
                 if(xmlHttp.responseText == "Done"){
                   successAlert.textContent = "Success - Image printing";
                   successAlert.style.display = "block";
-                } else if(xmlHttp.responseText == "Busy")
-                {
-                  warningAlert.textContent = "Busy - Printer is busy";
-                  warningAlert.style.display = "block";
+                  successAlert.scrollIntoView()
+                  clearImage()
                 }
             }
-            sendImageButton.disabled = false;
         }
         xmlHttp.open("post", "/SendImage"); 
         xmlHttp.send(formData); 
@@ -89,10 +89,11 @@ imageUpload.addEventListener("change", (e) => {
   cancelImageButton.addEventListener("click", (e) => {
     successAlert.style.display = "none";
     dangerAlert.style.display = "none";
-    removeImagePreview();
+    clearImage();
   });
 
-  function removeImagePreview(){
+  function clearImage(){
+    imageUpload.value = ''
     imagePreview.src = "";
   }
 
@@ -108,10 +109,8 @@ imageUpload.addEventListener("change", (e) => {
                 if(xmlHttp.responseText == "Done"){
                   successAlert.textContent = "Success - Message sent";
                   successAlert.style.display = "block";
-                } else if(xmlHttp.responseText == "Busy")
-                {
-                  warningAlert.textContent = "Success - Message printing";
-                  warningAlert.style.display = "block";
+                  textArea.value = '';
+                  successAlert.scrollIntoView();
                 }
             }
         }
