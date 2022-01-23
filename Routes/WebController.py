@@ -3,7 +3,9 @@ from datetime import datetime, timedelta
 from Logic.api import *
 from Logic.core import *
 import json
-from Logic.MySql import * 
+
+from Logic.Web.Login import *
+
 
 app = Flask(__name__)
 app.secret_key = "SECRETKEY"
@@ -19,29 +21,27 @@ def Index():
 
 @app.route("/Login", methods=['GET', 'POST'])
 def Login():
-    if 'loggedin' in session:
+    if LoggedIn():
         return redirect(url_for('Dashboard'))
 
     if request.method == "POST" and 'password' in request.form:
-        password = request.form['password']
-        with open('login.txt') as f:
-            data = f.read()
-        logins = json.loads(data)
-        for login in logins:
-            if password == login:
-                session['loggedin'] = True
-                session['id'] = "DESKTOPID"
-                session['name'] = logins[login]
-                print(session['name'])
-                return redirect(url_for('Dashboard'))
-        
-        msg = "Incorrect Password"
-        
+        authResponse = Authenticate(request.form['password'])
+        print(type(authResponse))
+        if isinstance(authResponse, dict):
+            print(authResponse)
+            session['loggedin'] = True
+            session['id'] = authResponse['id']
+            session['name'] = authResponse['forenames']
+            return redirect(url_for('Dashboard'))
+        else:
+            msg = 'Incorrect Password'
+    
     return render_template('Login.html', msg='')
+
 
 @app.route("/Dashboard")
 def Dashboard():
-    if 'loggedin' in session:
+    if LoggedIn():
         return render_template("Dashboard.html")
     else:
         return redirect(url_for('Login'))
@@ -56,7 +56,7 @@ def Logout():
 def sendImage():
     if 'loggedin' in session and request.method == "POST" and 'img' in request.form:
         if request.method == "POST" and 'img' in request.form:
-            status = printImage(request.form['img'])
+            status = printImage(request.form['img'], session['name'])
             return status
     return "Error"
 
