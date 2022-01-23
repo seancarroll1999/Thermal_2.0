@@ -49,8 +49,16 @@ class ThermalPrinter(Serial):
                 'most_heated_point should be between 0 and 255 (default: 3).')
 
         # Few important values
+        '''
+            Note:
+                Self._byte_time calc was replaced with hardcoded value
+                This is due to calc causing some images to spray characters
+                Normally calc == 0.0011etc now calc = 0.0013
+                Higher the calc e.g 0.0019 results in more visual artificats
+        '''
         self._baudrate = baudrate
-        self._byte_time = 11.0 / float(self._baudrate)
+        #self._byte_time = 11.0 / float(self._baudrate) 
+        self._byte_time = 0.0013
         self._dot_feed_time = 0.0025
         self._dot_print_time = 0.033
 

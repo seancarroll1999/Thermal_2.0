@@ -5,10 +5,6 @@ from Logic.Printer.DatabasePrinter import *
 import random
 import string
 
-
-customPrinter = CustomPrinter()
-customPrinter.flush()
-
 def printMorningMessage():
     return "Morning Message"
 
